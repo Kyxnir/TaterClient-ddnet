@@ -24,11 +24,27 @@ void CStatboardGores::OnReset()
     m_WasFrozen = false;
     for(int i = 0; i < MAX_CLIENTS; i++)
         m_aWasFrozen[i] = false;
+    m_Active = false;
 }
 
 void CStatboardGores::OnHammerUnfreeze()
 {
     m_UnfreezeCount++;
+}
+
+void CStatboardGores::ConKeyStats(IConsole::IResult *pResult, void *pUserData)
+{
+    static_cast<CStatboardGores *>(pUserData)->m_Active = pResult->GetInteger(0) != 0;
+}
+
+void CStatboardGores::OnConsoleInit()
+{
+    Console()->Register("+statboard_gores", "", CFGFLAG_CLIENT, ConKeyStats, this, "Show gores stats");
+}
+
+void CStatboardGores::OnRelease()
+{
+    m_Active = false;
 }
 
 float CStatboardGores::AverageSurvivalTime() const
