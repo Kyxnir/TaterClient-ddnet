@@ -8,6 +8,7 @@
 #include "character.h"
 #include "laser.h"
 #include "projectile.h"
+#include <game/client/components/statboard_gores.h>
 
 // Character, "physical" player's part
 
@@ -345,9 +346,12 @@ void CCharacter::FireWeapon()
 			else
 				Force *= Strength;
 
-			pTarget->TakeDamage(Force, g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage,
-				GetCid(), m_Core.m_ActiveWeapon);
-			pTarget->UnFreeze();
+                       bool WasFrozen = pTarget->m_FreezeTime > 0 || pTarget->m_Core.m_DeepFrozen || pTarget->m_Core.m_LiveFrozen;
+                       pTarget->TakeDamage(Force, g_pData->m_Weapons.m_Hammer.m_pBase->m_Damage,
+                               GetCid(), m_Core.m_ActiveWeapon);
+                       pTarget->UnFreeze();
+                       if(WasFrozen && m_IsLocal && g_pStatboardGores)
+                               g_pStatboardGores->OnHammerUnfreeze();
 
 			Hits++;
 		}
