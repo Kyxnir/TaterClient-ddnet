@@ -58,6 +58,7 @@
 #include "components/sounds.h"
 #include "components/spectator.h"
 #include "components/statboard.h"
+#include "components/statboard_gores.h"
 #include "components/tclient/bg_draw.h"
 #include "components/tclient/bindchat.h"
 #include "components/tclient/bindwheel.h"
@@ -167,9 +168,10 @@ public:
 	CDebugHud m_DebugHud;
 	CControls m_Controls;
 	CEffects m_Effects;
-	CScoreboard m_Scoreboard;
-	CStatboard m_Statboard;
-	CSounds m_Sounds;
+        CScoreboard m_Scoreboard;
+        CStatboard m_Statboard;
+        CStatboardGores m_StatboardGores;
+        CSounds m_Sounds;
 	CEmoticon m_Emoticon;
 
 	CDamageInd m_DamageInd;
